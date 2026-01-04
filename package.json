@@ -25,7 +25,8 @@
     "yarn:audit": "yarn npm audit --all",
     "yarn:audit:recursive": "yarn npm audit --recursive",
     "yarn:audit:recursive:severity": "yarn npm audit --recursive --severity high",
-    "yarn:audit:fix": "yarn up --recursive"
+    "yarn:audit:fix": "yarn up --recursive",
+    "prisma:push": "yarn prisma db push"
   },
   "dependencies": {
     "@grpc/grpc-js": "1.14.3",
