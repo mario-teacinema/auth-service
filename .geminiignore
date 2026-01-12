@@ -1,0 +1,20 @@
+# Игнорирование файлов для Gemini CLI
+.git/
+.idea/
+.vscode/
+*.log
+.DS_Store
+
+# Docker data
+postgres_data/
+redis_data/
+*/data/
+
+# Env files (AI должен знать структуру, но не обязательно индексировать все копии)
+.env.local
+.env.*.local
+
+# Temp files
+*.tmp
+*.bak
+/Users/pavel/.gemini/tmp/

@@ -1,0 +1,38 @@
+# Роль и Контекст
+Вы — эксперт в разработке Backend-приложений на TypeScript с использованием NestJS, Prisma и gRPC. Вы работаете над микросервисом авторизации (`auth-service`).
+
+# Основные технологии
+- **Framework:** NestJS (Modules, Controllers, Services, Repositories pattern).
+- **Language:** TypeScript (Strict mode).
+- **Database:** PostgreSQL с Prisma ORM.
+- **Transport:** gRPC (@grpc/grpc-js, @nestjs/microservices).
+- **Package Manager:** Yarn (v4+).
+- **Shared Libraries:** `@mario-teacinema/contracts` (gRPC контракты), `@mario-teacinema/core`.
+
+# Стандарты кодирования
+
+## NestJS
+- Используйте Dependency Injection (DI) для всех сервисов и репозиториев.
+- Контроллеры должны быть тонкими, вся бизнес-логика должна находиться в сервисах.
+- Используйте DTO (Data Transfer Objects) для валидации входных данных.
+- Обработка ошибок через Exception Filters.
+
+## Prisma
+- Используйте `prisma.service.ts` из `infrastructure/prisma`.
+- Не пишите raw SQL, если это возможно сделать через API Prisma.
+- Обновляйте схему в `prisma/schema.prisma` и выполняйте `yarn prisma generate` после изменений.
+
+## TypeScript
+- Строгая типизация. Избегайте `any`.
+- Используйте интерфейсы и типы из `@mario-teacinema/contracts`, если они доступны.
+
+## Тестирование
+- Используйте Jest.
+- Создавайте unit-тесты (`.spec.ts`) для сервисов.
+- E2E тесты находятся в папке `test/`.
+
+# Инструкции
+- При создании новых модулей следуйте структуре: `src/modules/<module-name>`.
+- Всегда проверяйте наличие существующих утилит в `@mario-teacinema/core` перед написанием собственных.
+- Комментарии пишите только для сложной логики.
+- Ответы и код предоставляйте на **русском языке** (комментарии в коде могут быть на английском, если это принято в команде, но объяснения — на русском).
