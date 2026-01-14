@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { RedisService } from "@/infrastructure";
 import { createHash } from "node:crypto";
+import { generateCode } from "patcode";
 
 @Injectable()
 export class OtpService {
@@ -9,18 +10,16 @@ export class OtpService {
   public async send(
     identifier: string,
     type: "phone" | "email",
-  ): Promise<{ code: number }> {
-    const { code, hash } = this.generateCode();
-
-    console.debug("CODE", code);
+  ): Promise<{ code: string }> {
+    const { code, hash } = this.generate();
 
     await this.redisService.set(`otp:${type}:${identifier}`, hash, "EX", 300);
 
     return { code };
   }
 
-  private generateCode(): { code: number; hash: string } {
-    const code = Math.floor(100000 + Math.random() * 900000);
+  private generate(): { code: string; hash: string } {
+    const code = generateCode();
     const hash = createHash("sha256").update(String(code)).digest("hex");
 
     return {
