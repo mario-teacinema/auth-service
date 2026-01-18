@@ -60,7 +60,10 @@ export class AuthService {
     }
 
     if (!account) {
-      throw new RpcException("Accound not found");
+      throw new RpcException({
+        code: 5,
+        details: "Account not found",
+      });
     }
 
     if (type === "phone" && !account.isPhoneVerified) {
