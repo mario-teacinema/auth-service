@@ -33,6 +33,7 @@
   "dependencies": {
     "@grpc/grpc-js": "1.14.3",
     "@grpc/proto-loader": "0.8.0",
+    "@mario-teacinema/common": "^1.0.4",
     "@mario-teacinema/contracts": "^1.0.3",
     "@nestjs/common": "11.1.11",
     "@nestjs/config": "4.0.2",
