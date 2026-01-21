@@ -6,6 +6,7 @@ import {
 } from "@nestjs/common";
 import Redis from "ioredis";
 import { ConfigService } from "@nestjs/config";
+import { AllConfigs } from "@/config";
 
 @Injectable()
 export class RedisService
@@ -14,47 +15,42 @@ export class RedisService
 {
   private readonly logger = new Logger(RedisService.name);
 
-  public constructor(private readonly configService: ConfigService) {
+  public constructor(
+    private readonly configService: ConfigService<AllConfigs>,
+  ) {
     super({
-      username: configService.getOrThrow<string>("REDIS_USER"),
-      password: configService.getOrThrow<string>("REDIS_PASSWORD"),
-      host: configService.getOrThrow<string>("REDIS_HOST"),
-      port: configService.getOrThrow<number>("REDIS_PORT"),
+      username: configService.get("redis.user", { infer: true }),
+      password: configService.get("redis.password", { infer: true }),
+      host: configService.get("redis.host", { infer: true }),
+      port: configService.get("redis.port", { infer: true }),
       maxRetriesPerRequest: 5,
       enableOfflineQueue: true,
     });
   }
 
-  public async onModuleInit(): Promise<void> {
+  public onModuleInit(): void {
     const start = Date.now();
     this.logger.log("Initializing Redis connection...");
-    try {
-      this.on("connect", () => {
-        this.logger.log("Redis connection...");
-      });
-      this.on("ready", () => {
-        const ms = Date.now() - start;
-        this.logger.log(`Redis connected (time=${ms}ms)`);
-      });
-      this.on("error", (error) => {
-        this.logger.error(`Redis error`, {
-          error: error.message ?? error,
-        });
-      });
-      this.on("close", () => {
-        this.logger.warn(`Redis connection closed`);
-      });
-      this.on("reconnecting", () => {
-        this.logger.log(`Redis reconnecting...`);
-      });
-    } catch (error) {
-      this.logger.error("Failed to connect to redis: ", error);
 
-      throw error;
-    }
+    this.on("connect", () => {
+      this.logger.log("Redis connection...");
+    });
+    this.on("ready", () => {
+      const ms = Date.now() - start;
+      this.logger.log(`Redis connected (time=${ms}ms)`);
+    });
+    this.on("error", (error: Error) => {
+      this.logger.error(`Redis error: ${error.message}`);
+    });
+    this.on("close", () => {
+      this.logger.warn(`Redis connection closed`);
+    });
+    this.on("reconnecting", () => {
+      this.logger.log(`Redis reconnecting...`);
+    });
   }
 
-  public async onModuleDestroy() {
+  public async onModuleDestroy(): Promise<void> {
     this.logger.log("Closing Redis connection...");
 
     try {
@@ -62,9 +58,8 @@ export class RedisService
 
       this.logger.log(`Redis connection closed`);
     } catch (error) {
-      this.logger.error(`Error closing Redis connection`, {
-        error: error.message ?? error,
-      });
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`Error closing Redis connection: ${message}`);
 
       throw error;
     }

@@ -4,11 +4,14 @@ import { PrismaModule } from "./infrastructure";
 import { ConfigModule } from "@nestjs/config";
 import { RedisModule } from "@/infrastructure";
 import { OtpModule } from "./modules/otp/otp.module";
-import { databaseEnv, grpcEnv } from "@/config";
+import { databaseEnv, grpcEnv, redisEnv } from "@/config";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [databaseEnv, grpcEnv] }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [databaseEnv, grpcEnv, redisEnv],
+    }),
     PrismaModule,
     RedisModule,
     AuthModule,

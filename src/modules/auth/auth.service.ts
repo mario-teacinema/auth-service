@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import {
   SendOtpRequest,
+  SendOtpResponse,
   VerifyOtpRequest,
   VerifyOtpResponse,
 } from "@mario-teacinema/contracts/gen/auth";
@@ -16,7 +17,7 @@ export class AuthService {
     private readonly otpService: OtpService,
   ) {}
 
-  public async sendOtp(data: SendOtpRequest): Promise<any> {
+  public async sendOtp(data: SendOtpRequest): Promise<SendOtpResponse> {
     const { identifier, type } = data;
 
     let account: Account | null = null;
