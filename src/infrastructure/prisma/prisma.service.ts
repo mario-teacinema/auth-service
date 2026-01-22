@@ -8,6 +8,7 @@ import { PrismaClient } from "../../../prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { ConfigService } from "@nestjs/config";
 import { AllConfigs } from "@/config";
+import { Pool } from "pg";
 
 @Injectable()
 export class PrismaService
@@ -19,13 +20,15 @@ export class PrismaService
   public constructor(
     private readonly configService: ConfigService<AllConfigs>,
   ) {
-    const adapter = new PrismaPg({
+    const pool = new Pool({
       user: configService.get("database.user", { infer: true }),
       password: configService.get("database.password", { infer: true }),
       host: configService.get("database.host", { infer: true }),
       port: configService.get("database.port", { infer: true }),
-      name: configService.get("database.name", { infer: true }),
+      database: configService.get("database.name", { infer: true }),
     });
+
+    const adapter = new PrismaPg(pool);
     super({ adapter });
   }
 

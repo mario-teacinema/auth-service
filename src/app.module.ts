@@ -3,7 +3,6 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { PrismaModule } from "./infrastructure";
 import { ConfigModule } from "@nestjs/config";
 import { RedisModule } from "@/infrastructure";
-import { OtpModule } from "./modules/otp/otp.module";
 import { databaseEnv, grpcEnv, redisEnv } from "@/config";
 
 @Module({
@@ -15,7 +14,6 @@ import { databaseEnv, grpcEnv, redisEnv } from "@/config";
     PrismaModule,
     RedisModule,
     AuthModule,
-    OtpModule,
   ],
   controllers: [],
   providers: [],

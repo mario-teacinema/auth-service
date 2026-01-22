@@ -40,8 +40,6 @@ export class AuthService {
       type as "phone" | "email",
     );
 
-    console.debug("CODE", code);
-
     return {
       ok: true,
     };
@@ -73,12 +71,13 @@ export class AuthService {
       });
     }
 
-    if (type === "email" && !account.isPhoneVerified) {
+    if (type === "email" && !account.isEmailVerified) {
       await this.authRepository.update(account.id, {
         isEmailVerified: true,
       });
     }
 
+    // TODO: Implement proper JWT token generation
     return {
       accessToken: "123456",
       refreshToken: "123456",
