@@ -27,6 +27,7 @@
     "yarn:audit:recursive:severity": "yarn npm audit --recursive --severity high",
     "yarn:audit:fix": "yarn up --recursive",
     "prisma:generate": "yarn prisma generate",
+    "prisma:migrate": "yarn prisma migrate dev",
     "prisma:push": "yarn prisma db push",
     "prisma:studio": "yarn prisma studio"
   },
