@@ -40,6 +40,8 @@ export class AuthService {
       type as "phone" | "email",
     );
 
+    console.log("CODE: ", code);
+
     return {
       ok: true,
     };

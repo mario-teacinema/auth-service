@@ -1335,13 +1335,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mario-teacinema/contracts@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@mario-teacinema/contracts@npm:1.0.3"
+"@mario-teacinema/contracts@npm:1.0.7":
+  version: 1.0.7
+  resolution: "@mario-teacinema/contracts@npm:1.0.7"
   dependencies:
-    "@nestjs/microservices": "npm:^11.1.11"
-    rxjs: "npm:^7.8.2"
-  checksum: 10c0/e36b1bdb25e91cb228f18da494b16341a9f03fdbdbe87f55b7f74a490f8f8bed14e039a446a4480c75a02c1e756af5008dfa83507e9a54285c17f5b985368f81
+    "@nestjs/microservices": "npm:11.1.11"
+    rxjs: "npm:7.8.2"
+  checksum: 10c0/146f156a31a3f601b98e512a241d3408eb82a98a5d04aed1e0497cacd878fdb90ce11a5ab0a761f2b8cdd3effa8737a9202729fd0d4b0848a93d4a6da8c4b1ff
   languageName: node
   linkType: hard
 
@@ -1484,7 +1484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/microservices@npm:11.1.11, @nestjs/microservices@npm:^11.1.11":
+"@nestjs/microservices@npm:11.1.11":
   version: 11.1.11
   resolution: "@nestjs/microservices@npm:11.1.11"
   dependencies:
@@ -2828,7 +2828,7 @@ __metadata:
     "@grpc/grpc-js": "npm:1.14.3"
     "@grpc/proto-loader": "npm:0.8.0"
     "@mario-teacinema/common": "npm:1.0.4"
-    "@mario-teacinema/contracts": "npm:1.0.3"
+    "@mario-teacinema/contracts": "npm:1.0.7"
     "@mario-teacinema/core": "npm:1.0.3"
     "@nestjs/cli": "npm:11.0.14"
     "@nestjs/common": "npm:11.1.11"
@@ -7068,7 +7068,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.8.2, rxjs@npm:^7.8.2":
+"rxjs@npm:7.8.2":
   version: 7.8.2
   resolution: "rxjs@npm:7.8.2"
   dependencies:
