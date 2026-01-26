@@ -1,5 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import {
+  RefreshRequest,
+  RefreshResponse,
   SendOtpRequest,
   SendOtpResponse,
   VerifyOtpRequest,
@@ -12,6 +14,7 @@ import { RpcException } from "@nestjs/microservices";
 import { PassportService, TokenPayload } from "@mario-teacinema/passport";
 import { ConfigService } from "@nestjs/config";
 import { AllConfigs } from "@/config";
+import { RpcStatus } from "@mario-teacinema/common";
 
 @Injectable()
 export class AuthService {
@@ -122,5 +125,23 @@ export class AuthService {
       accessToken,
       refreshToken,
     };
+  }
+
+  public async refresh(data: RefreshRequest): Promise<{
+    readonly accessToken: string;
+    readonly refreshToken: string;
+  }> {
+    const { refreshToken } = data;
+
+    const result = this.passportService.verify(refreshToken);
+    const { valid, userId } = result;
+    if (!valid) {
+      throw new RpcException({
+        code: RpcStatus.UNAUTHENTICATED,
+        details: result.reason,
+      });
+    }
+
+    return this.#generateTokens(String(userId));
   }
 }
