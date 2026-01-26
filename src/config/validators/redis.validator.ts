@@ -3,17 +3,17 @@ import { IsInt, IsString, Max, Min } from "class-validator";
 
 export class RedisValidator {
   @IsString()
-  public REDIS_USER: string;
+  public readonly REDIS_USER: string;
 
   @IsString()
-  public REDIS_PASSWORD: string;
+  public readonly REDIS_PASSWORD: string;
 
   @IsString()
-  public REDIS_HOST: string;
+  public readonly REDIS_HOST: string;
 
   @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(65535)
-  public REDIS_PORT: number;
+  public readonly REDIS_PORT: number;
 }

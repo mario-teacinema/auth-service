@@ -1356,13 +1356,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mario-teacinema/passport@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@mario-teacinema/passport@npm:1.0.1"
+"@mario-teacinema/passport@npm:1.0.5":
+  version: 1.0.5
+  resolution: "@mario-teacinema/passport@npm:1.0.5"
   dependencies:
     "@nestjs/common": "npm:^11.1.12"
     "@nestjs/core": "npm:^11.1.12"
-  checksum: 10c0/941d9ce2d00fbb44a08bb5d924d39f096ca1f9da7944dbd5c427a65e01e46dd031f851d3bd6c03023e42e0ec8abc23872daae4be0648ca2df1bbe26650f2bb7e
+  checksum: 10c0/2f0782290717e45674badbe20692bfdae2d62a6bffd9547f6ca5f227268666332fbe7aaf57547aa719a1bc681427fad664dbd3aba71e264b4ed290b23f8f9abc
   languageName: node
   linkType: hard
 
@@ -2891,7 +2891,7 @@ __metadata:
     "@mario-teacinema/common": "npm:1.0.4"
     "@mario-teacinema/contracts": "npm:1.0.7"
     "@mario-teacinema/core": "npm:1.0.3"
-    "@mario-teacinema/passport": "npm:1.0.1"
+    "@mario-teacinema/passport": "npm:1.0.5"
     "@nestjs/cli": "npm:11.0.14"
     "@nestjs/common": "npm:11.1.11"
     "@nestjs/config": "npm:4.0.2"

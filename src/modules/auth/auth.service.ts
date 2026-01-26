@@ -9,15 +9,31 @@ import { AuthRepository } from "./auth.repository";
 import { Account } from "@prisma/generated/client";
 import { OtpService } from "@/modules/otp/otp.service";
 import { RpcException } from "@nestjs/microservices";
-import { PassportService } from "@mario-teacinema/passport";
+import { PassportService, TokenPayload } from "@mario-teacinema/passport";
+import { ConfigService } from "@nestjs/config";
+import { AllConfigs } from "@/config";
 
 @Injectable()
 export class AuthService {
+  private readonly ACCESS_TOKEN_TTL: number = 0;
+
+  private readonly REFRESH_TOKEN_TTL: number = 0;
+
   public constructor(
     private readonly authRepository: AuthRepository,
     private readonly otpService: OtpService,
     private readonly passportService: PassportService,
-  ) {}
+    private readonly configService: ConfigService<AllConfigs>,
+  ) {
+    this.ACCESS_TOKEN_TTL =
+      this.configService.get("passport.accessTtl", {
+        infer: true,
+      }) ?? 0;
+    this.REFRESH_TOKEN_TTL =
+      this.configService.get("passport.refreshTll", {
+        infer: true,
+      }) ?? 0;
+  }
 
   public async sendOtp(data: SendOtpRequest): Promise<SendOtpResponse> {
     const { identifier, type } = data;
@@ -69,6 +85,8 @@ export class AuthService {
       });
     }
 
+    const { id } = account;
+
     if (type === "phone" && !account.isPhoneVerified) {
       await this.authRepository.update(account.id, {
         isPhoneVerified: true,
@@ -81,10 +99,28 @@ export class AuthService {
       });
     }
 
-    // TODO: Implement proper JWT token generation
+    return this.#generateTokens(id);
+  }
+
+  #generateTokens(userId: string): {
+    readonly accessToken: string;
+    readonly refreshToken: string;
+  } {
+    const payload: TokenPayload = { sub: userId };
+
+    const accessToken = this.passportService.generate(
+      payload,
+      this.ACCESS_TOKEN_TTL,
+    );
+
+    const refreshToken = this.passportService.generate(
+      payload,
+      this.REFRESH_TOKEN_TTL,
+    );
+
     return {
-      accessToken: this.passportService.generate(account.id, 900),
-      refreshToken: "123456",
+      accessToken,
+      refreshToken,
     };
   }
 }

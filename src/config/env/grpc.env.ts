@@ -9,5 +9,5 @@ export const grpcEnv = registerAs<GrpcConfig>("grpc", () => {
   return {
     host: process.env.GRPC_HOST ?? "",
     port: parseInt(process.env.GRPC_PORT ?? ""),
-  };
+  } satisfies GrpcConfig;
 });

@@ -2,8 +2,8 @@ import { IsNumber, IsString } from "class-validator";
 
 export class GrpcValidator {
   @IsString()
-  public GRPC_HOST: string;
+  public readonly GRPC_HOST: string;
 
   @IsNumber()
-  public GRPC_PORT: number;
+  public readonly GRPC_PORT: number;
 }

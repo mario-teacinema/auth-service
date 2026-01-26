@@ -10,5 +10,5 @@ export const passportEnv = registerAs<PassportConfig>("passport", () => {
     secretKey: process.env.PASSPORT_SECRET_KEY ?? "",
     accessTtl: parseInt(process.env.PASSPORT_ACCESS_TTL ?? ""),
     refreshTll: parseInt(process.env.PASSPORT_REFRESH_TTL ?? ""),
-  };
+  } satisfies PassportConfig;
 });

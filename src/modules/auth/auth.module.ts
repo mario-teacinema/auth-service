@@ -4,12 +4,17 @@ import { AuthController } from "./auth.controller";
 import { AuthRepository } from "./auth.repository";
 import { OtpModule } from "@/modules/otp/otp.module";
 import { PassportModule } from "@mario-teacinema/passport";
+import { ConfigService } from "@nestjs/config";
+import { AllConfigs } from "@/config";
+import { passportConfigLoader } from "@/config/loaders";
 
 @Module({
   imports: [
     OtpModule,
-    PassportModule.register({
-      secretKey: "123456",
+    PassportModule.registerAsync({
+      useFactory: (configService: ConfigService<AllConfigs>) =>
+        passportConfigLoader(configService),
+      inject: [ConfigService],
     }),
   ],
   controllers: [AuthController],
