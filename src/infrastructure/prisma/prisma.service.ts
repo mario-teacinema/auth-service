@@ -4,11 +4,10 @@ import {
   OnModuleDestroy,
   OnModuleInit,
 } from "@nestjs/common";
-import { PrismaClient } from "../../../prisma/generated/client";
+import { PrismaClient } from "@prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { ConfigService } from "@nestjs/config";
 import { AllConfigs } from "@/config";
-import { Pool } from "pg";
 
 @Injectable()
 export class PrismaService
@@ -20,7 +19,7 @@ export class PrismaService
   public constructor(
     private readonly configService: ConfigService<AllConfigs>,
   ) {
-    const pool = new Pool({
+    const adapter = new PrismaPg({
       user: configService.get("database.user", { infer: true }),
       password: configService.get("database.password", { infer: true }),
       host: configService.get("database.host", { infer: true }),
@@ -28,7 +27,6 @@ export class PrismaService
       database: configService.get("database.name", { infer: true }),
     });
 
-    const adapter = new PrismaPg(pool);
     super({ adapter });
   }
 

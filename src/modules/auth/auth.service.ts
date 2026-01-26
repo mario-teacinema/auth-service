@@ -9,12 +9,14 @@ import { AuthRepository } from "./auth.repository";
 import { Account } from "@prisma/generated/client";
 import { OtpService } from "@/modules/otp/otp.service";
 import { RpcException } from "@nestjs/microservices";
+import { PassportService } from "@mario-teacinema/passport";
 
 @Injectable()
 export class AuthService {
   public constructor(
     private readonly authRepository: AuthRepository,
     private readonly otpService: OtpService,
+    private readonly passportService: PassportService,
   ) {}
 
   public async sendOtp(data: SendOtpRequest): Promise<SendOtpResponse> {
@@ -81,7 +83,7 @@ export class AuthService {
 
     // TODO: Implement proper JWT token generation
     return {
-      accessToken: "123456",
+      accessToken: this.passportService.generate(account.id, 900),
       refreshToken: "123456",
     };
   }
