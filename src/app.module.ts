@@ -3,13 +3,13 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { PrismaModule } from "./infrastructure";
 import { ConfigModule } from "@nestjs/config";
 import { RedisModule } from "@/infrastructure";
-import { databaseEnv, grpcEnv, redisEnv } from "@/config";
+import { databaseEnv, grpcEnv, passportEnv, redisEnv } from "@/config";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseEnv, grpcEnv, redisEnv],
+      load: [databaseEnv, grpcEnv, passportEnv, redisEnv],
     }),
     PrismaModule,
     RedisModule,
