@@ -2,11 +2,16 @@ import { Injectable } from "@nestjs/common";
 import {
   type GetAccountRequest,
   type GetAccountResponse,
-  Role,
 } from "@mario-teacinema/contracts/gen/account";
 import { AccountRepository } from "./account.repository";
 import { RpcException } from "@nestjs/microservices";
 import { convertEnum, RpcStatus } from "@mario-teacinema/common";
+
+enum Role {
+  USER = 0,
+  ADMIN = 1,
+  UNRECOGNIZED = -1,
+}
 
 @Injectable()
 export class AccountService {
