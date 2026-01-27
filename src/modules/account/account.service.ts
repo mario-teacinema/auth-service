@@ -1,11 +1,12 @@
 import { Injectable } from "@nestjs/common";
-import type {
+import {
   GetAccountRequest,
   GetAccountResponse,
+  Role,
 } from "@mario-teacinema/contracts/gen/account";
 import { AccountRepository } from "./account.repository";
 import { RpcException } from "@nestjs/microservices";
-import { RpcStatus } from "@mario-teacinema/common";
+import { convertEnum, RpcStatus } from "@mario-teacinema/common";
 
 @Injectable()
 export class AccountService {
@@ -28,11 +29,11 @@ export class AccountService {
 
     return {
       id,
-      phone,
-      email,
+      phone: phone ?? "",
+      email: email ?? "",
       isPhoneVerified,
       isEmailVerified,
-      role,
+      role: convertEnum(Role, role),
     };
   }
 }
