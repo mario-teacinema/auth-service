@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import {
-  GetAccountRequest,
-  GetAccountResponse,
+  type GetAccountRequest,
+  type GetAccountResponse,
   Role,
 } from "@mario-teacinema/contracts/gen/account";
 import { AccountRepository } from "./account.repository";
