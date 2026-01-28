@@ -119,7 +119,7 @@ export class AccountService {
 
     await this.accountRepository.deletePendingChange(userId, "email");
 
-    return { ok: false };
+    return { ok: true };
   }
 
   public async initPhoneChange(data: InitPhoneChangeRequest) {
@@ -189,6 +189,6 @@ export class AccountService {
 
     await this.accountRepository.deletePendingChange(userId, "phone");
 
-    return { ok: false };
+    return { ok: true };
   }
 }
