@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import {
   ConfirmEmailChangeRequest,
+  ConfirmPhoneChangeRequest,
   type GetAccountRequest,
   type GetAccountResponse,
   InitEmailChangeRequest,
+  InitPhoneChangeRequest,
 } from "@mario-teacinema/contracts/gen/account";
 import { AccountRepository } from "./account.repository";
 import { RpcException } from "@nestjs/microservices";
@@ -116,6 +118,76 @@ export class AccountService {
     });
 
     await this.accountRepository.deletePendingChange(userId, "email");
+
+    return { ok: false };
+  }
+
+  public async initPhoneChange(data: InitPhoneChangeRequest) {
+    const { phone, userId } = data;
+
+    const existing = await this.userRepository.findByPhone(phone);
+
+    if (existing) {
+      throw new RpcException({
+        code: RpcStatus.NOT_FOUND,
+        details: "Phone already exists",
+      });
+    }
+
+    const { code, hash } = await this.otpService.send(phone, "phone");
+
+    console.log(">> code :", code);
+
+    await this.accountRepository.upsertPendingChange({
+      accountId: userId,
+      type: "phone",
+      value: phone,
+      codeHash: hash,
+      expiresAt: new Date(Date.now() + 5 * 60 * 1000),
+    });
+
+    return { ok: true };
+  }
+
+  public async confirmPhoneChange(data: ConfirmPhoneChangeRequest) {
+    const { phone, code, userId } = data;
+
+    const pending = await this.accountRepository.findPendingChange(
+      userId,
+      "phone",
+    );
+
+    if (!pending) {
+      throw new RpcException({
+        code: RpcStatus.NOT_FOUND,
+        details: "No pending request",
+      });
+    }
+
+    const { value, expiresAt } = pending;
+
+    if (value !== phone) {
+      throw new RpcException({
+        code: RpcStatus.INVALID_ARGUMENTS,
+        details: "Phone mismatch",
+      });
+    }
+
+    if (expiresAt < new Date()) {
+      throw new RpcException({
+        code: RpcStatus.NOT_FOUND,
+        details: "Code expired",
+      });
+    }
+
+    await this.otpService.verify(value, code, "email");
+
+    await this.userRepository.update(userId, {
+      phone,
+      isPhoneVerified: true,
+    });
+
+    await this.accountRepository.deletePendingChange(userId, "phone");
 
     return { ok: false };
   }
