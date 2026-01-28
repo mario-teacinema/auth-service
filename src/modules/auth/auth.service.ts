@@ -128,10 +128,10 @@ export class AuthService {
     };
   }
 
-  public async refresh(data: RefreshRequest): Promise<{
+  public refresh(data: RefreshRequest): {
     readonly accessToken: string;
     readonly refreshToken: string;
-  }> {
+  } {
     const { refreshToken } = data;
 
     const result = this.passportService.verify(refreshToken);

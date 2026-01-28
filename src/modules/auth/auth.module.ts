@@ -7,6 +7,7 @@ import { PassportModule } from "@mario-teacinema/passport";
 import { ConfigService } from "@nestjs/config";
 import { AllConfigs } from "@/config";
 import { passportConfigLoader } from "@/config/loaders";
+import { UserRepository } from "@/shared/repositories";
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { passportConfigLoader } from "@/config/loaders";
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthRepository],
+  providers: [AuthService, AuthRepository, UserRepository],
 })
 export class AuthModule {}
