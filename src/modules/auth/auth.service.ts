@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import {
   RefreshRequest,
-  RefreshResponse,
   SendOtpRequest,
   SendOtpResponse,
   VerifyOtpRequest,
@@ -15,6 +14,7 @@ import { PassportService, TokenPayload } from "@mario-teacinema/passport";
 import { ConfigService } from "@nestjs/config";
 import { AllConfigs } from "@/config";
 import { RpcStatus } from "@mario-teacinema/common";
+import { UserRepository } from "@/shared/repositories";
 
 @Injectable()
 export class AuthService {
@@ -24,6 +24,7 @@ export class AuthService {
 
   public constructor(
     private readonly authRepository: AuthRepository,
+    private readonly userRepository: UserRepository,
     private readonly otpService: OtpService,
     private readonly passportService: PassportService,
     private readonly configService: ConfigService<AllConfigs>,
@@ -44,9 +45,9 @@ export class AuthService {
     let account: Account | null = null;
 
     if (type === "phone") {
-      account = await this.authRepository.findByPhone(identifier);
+      account = await this.userRepository.findByPhone(identifier);
     } else if (type === "email") {
-      account = await this.authRepository.findByEmail(identifier);
+      account = await this.userRepository.findByEmail(identifier);
     }
 
     if (!account) {
@@ -76,9 +77,9 @@ export class AuthService {
     let account: Account | null = null;
 
     if (type === "phone") {
-      account = await this.authRepository.findByPhone(identifier);
+      account = await this.userRepository.findByPhone(identifier);
     } else if (type === "email") {
-      account = await this.authRepository.findByEmail(identifier);
+      account = await this.userRepository.findByEmail(identifier);
     }
 
     if (!account) {
@@ -91,13 +92,13 @@ export class AuthService {
     const { id } = account;
 
     if (type === "phone" && !account.isPhoneVerified) {
-      await this.authRepository.update(account.id, {
+      await this.userRepository.update(account.id, {
         isPhoneVerified: true,
       });
     }
 
     if (type === "email" && !account.isEmailVerified) {
-      await this.authRepository.update(account.id, {
+      await this.userRepository.update(account.id, {
         isEmailVerified: true,
       });
     }

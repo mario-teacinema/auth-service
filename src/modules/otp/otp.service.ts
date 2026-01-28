@@ -12,12 +12,12 @@ export class OtpService {
   public async send(
     identifier: string,
     type: "phone" | "email",
-  ): Promise<{ code: string }> {
+  ): Promise<{ code: string; hash: string }> {
     const { code, hash } = this.generate();
 
     await this.redisService.set(`otp:${type}:${identifier}`, hash, "EX", 300);
 
-    return { code };
+    return { code, hash };
   }
 
   public async verify(

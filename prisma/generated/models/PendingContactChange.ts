@@ -223,6 +223,7 @@ export type PendingContactChangeOrderByWithRelationInput = {
 
 export type PendingContactChangeWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  accountId_type?: Prisma.PendingContactChangeAccountIdTypeCompoundUniqueInput
   AND?: Prisma.PendingContactChangeWhereInput | Prisma.PendingContactChangeWhereInput[]
   OR?: Prisma.PendingContactChangeWhereInput[]
   NOT?: Prisma.PendingContactChangeWhereInput | Prisma.PendingContactChangeWhereInput[]
@@ -234,7 +235,7 @@ export type PendingContactChangeWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"PendingContactChange"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PendingContactChange"> | Date | string
   account?: Prisma.XOR<Prisma.AccountNullableScalarRelationFilter, Prisma.AccountWhereInput> | null
-}, "id">
+}, "id" | "accountId_type">
 
 export type PendingContactChangeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -348,6 +349,11 @@ export type PendingContactChangeListRelationFilter = {
 
 export type PendingContactChangeOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type PendingContactChangeAccountIdTypeCompoundUniqueInput = {
+  accountId: string
+  type: string
 }
 
 export type PendingContactChangeCountOrderByAggregateInput = {
