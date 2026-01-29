@@ -1335,13 +1335,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mario-teacinema/contracts@npm:1.0.13":
-  version: 1.0.13
-  resolution: "@mario-teacinema/contracts@npm:1.0.13"
+"@mario-teacinema/contracts@npm:1.0.14":
+  version: 1.0.14
+  resolution: "@mario-teacinema/contracts@npm:1.0.14"
   dependencies:
     "@nestjs/microservices": "npm:11.1.11"
     rxjs: "npm:7.8.2"
-  checksum: 10c0/44c4fcc73914d48769387a1817222ebc38eae887cf071117aac8632e70915ac28c1b626a9ad7b9c00d51fb16c0af4ad7f5478552bd68c0f00b43ee716d132d5e
+  checksum: 10c0/9ea11caaf90bf77596aef6309023e09f65ac3bfeeb1cfb18c59a76398f437eeca5c6324a9130a8f11bd2f716e5ae3b14b93f077282c1ba2b1b7ca95f2b290d2f
   languageName: node
   linkType: hard
 
@@ -2905,7 +2905,7 @@ __metadata:
     "@grpc/grpc-js": "npm:1.14.3"
     "@grpc/proto-loader": "npm:0.8.0"
     "@mario-teacinema/common": "npm:1.0.8"
-    "@mario-teacinema/contracts": "npm:1.0.13"
+    "@mario-teacinema/contracts": "npm:1.0.14"
     "@mario-teacinema/core": "npm:1.0.3"
     "@mario-teacinema/passport": "npm:1.0.5"
     "@nestjs/cli": "npm:11.0.14"
