@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { AllConfigs, telegramEnv } from "@/config";
+import { AllConfigs } from "@/config";
 
 @Injectable()
 export class TelegramService {
@@ -36,10 +36,7 @@ export class TelegramService {
     url.searchParams.append("bot_id", this.BOT_ID);
     url.searchParams.append("origin", this.REDIRECT_ORIGIN);
     url.searchParams.append("request_access", "write");
-    url.searchParams.append(
-      "return_to",
-      `${this.REDIRECT_ORIGIN}/auth/telegram`,
-    );
+    url.searchParams.append("return_to", this.REDIRECT_ORIGIN);
     return { url: url.href };
   }
 }

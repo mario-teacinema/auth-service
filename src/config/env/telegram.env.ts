@@ -3,7 +3,7 @@ import { validateEnv } from "@/shared/utils/env";
 import { TelegramValidator } from "../validators";
 import { TelegramConfig } from "../interfaces";
 
-export const telegramEnv = registerAs<TelegramConfig>("passport", () => {
+export const telegramEnv = registerAs<TelegramConfig>("telegram", () => {
   validateEnv(process.env, TelegramValidator);
 
   return {
