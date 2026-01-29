@@ -11,6 +11,7 @@ import {
   telegramEnv,
 } from "@/config";
 import { AccountModule } from "./modules/account/account.module";
+import { TelegramModule } from './modules/telegram/telegram.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AccountModule } from "./modules/account/account.module";
     RedisModule,
     AuthModule,
     AccountModule,
+    TelegramModule,
   ],
   controllers: [],
   providers: [],
