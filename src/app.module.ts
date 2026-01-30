@@ -12,6 +12,7 @@ import {
 } from "@/config";
 import { AccountModule } from "./modules/account/account.module";
 import { TelegramModule } from "./modules/telegram/telegram.module";
+import { HealthModule } from "./modules/health/health.module";
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { TelegramModule } from "./modules/telegram/telegram.module";
     AuthModule,
     AccountModule,
     TelegramModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],
