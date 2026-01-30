@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AllConfigs } from "@/config";
+import { TelegramVerifyRequest } from "@mario-teacinema/contracts/gen/auth";
 
 @Injectable()
 export class TelegramService {
@@ -38,5 +39,9 @@ export class TelegramService {
     url.searchParams.append("request_access", "write");
     url.searchParams.append("return_to", this.REDIRECT_ORIGIN);
     return { url: url.href };
+  }
+
+  public async verify(data: TelegramVerifyRequest) {
+    const telegramId = data.query.id;
   }
 }
