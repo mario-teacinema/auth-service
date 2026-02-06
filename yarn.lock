@@ -2098,6 +2098,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/eslint-plugin-security@npm:^3":
+  version: 3.0.1
+  resolution: "@types/eslint-plugin-security@npm:3.0.1"
+  dependencies:
+    "@types/eslint": "npm:*"
+  checksum: 10c0/e126a319b70f0b687602e02379685348c1bc8b38a5155874d3bc1b1c99ebaaa7333b89cbe18d1eb4c4af0a3622855338bec5df7e25f41a4c616f72245132fa19
+  languageName: node
+  linkType: hard
+
 "@types/eslint-scope@npm:^3.7.7":
   version: 3.7.7
   resolution: "@types/eslint-scope@npm:3.7.7"
@@ -2919,6 +2928,7 @@ __metadata:
     "@nestjs/testing": "npm:11.1.11"
     "@prisma/adapter-pg": "npm:7.2.0"
     "@prisma/client": "npm:^7.3.0"
+    "@types/eslint-plugin-security": "npm:^3"
     "@types/express": "npm:5.0.6"
     "@types/jest": "npm:29.5.14"
     "@types/node": "npm:22.19.3"
@@ -2929,6 +2939,7 @@ __metadata:
     eslint: "npm:9.39.2"
     eslint-config-prettier: "npm:10.1.8"
     eslint-plugin-prettier: "npm:5.5.4"
+    eslint-plugin-security: "npm:^3.0.1"
     globals: "npm:16.5.0"
     ioredis: "npm:5.8.2"
     jest: "npm:29.7.0"
@@ -4004,6 +4015,15 @@ __metadata:
     eslint-config-prettier:
       optional: true
   checksum: 10c0/5cc780e0ab002f838ad8057409e86de4ff8281aa2704a50fa8511abff87028060c2e45741bc9cbcbd498712e8d189de8026e70aed9e20e50fe5ba534ee5a8442
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-security@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "eslint-plugin-security@npm:3.0.1"
+  dependencies:
+    safe-regex: "npm:^2.1.1"
+  checksum: 10c0/6b85feabe389b73e0a5961abfeac79214d61699249c990c9a66628a5e45870b49f1ab0be63223dfd75c4046ff9632f42a963790616f66e2c6d59b6c24643c5e0
   languageName: node
   linkType: hard
 
@@ -7000,6 +7020,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"regexp-tree@npm:~0.1.1":
+  version: 0.1.27
+  resolution: "regexp-tree@npm:0.1.27"
+  bin:
+    regexp-tree: bin/regexp-tree
+  checksum: 10c0/f636f44b4a0d93d7d6926585ecd81f63e4ce2ac895bc417b2ead0874cd36b337dcc3d0fedc63f69bf5aaeaa4340f36ca7e750c9687cceaf8087374e5284e843c
+  languageName: node
+  linkType: hard
+
 "remeda@npm:2.33.4":
   version: 2.33.4
   resolution: "remeda@npm:2.33.4"
@@ -7129,6 +7158,15 @@ __metadata:
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: 10c0/6501914237c0a86e9675d4e51d89ca3c21ffd6a31642efeba25ad65720bce6921c9e7e974e5be91a786b25aa058b5303285d3c15dbabf983a919f5f630d349f3
+  languageName: node
+  linkType: hard
+
+"safe-regex@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "safe-regex@npm:2.1.1"
+  dependencies:
+    regexp-tree: "npm:~0.1.1"
+  checksum: 10c0/53eb5d3ecf4b3c0954dff465eb179af4d2f5f77f74ba7b57489adbc4fa44454c3d391f37379cd28722d9ac6fa5b70be3f4645d4bd25df395fd99b934f6ec9265
   languageName: node
   linkType: hard
 
