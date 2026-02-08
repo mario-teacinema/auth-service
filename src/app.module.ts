@@ -9,16 +9,19 @@ import {
   passportEnv,
   redisEnv,
   telegramEnv,
+  metricsEnv,
 } from "@/config";
 import { AccountModule } from "./modules/account/account.module";
 import { TelegramModule } from "./modules/telegram/telegram.module";
 import { HealthModule } from "./modules/health/health.module";
+import { PrometheusModule } from "@willsoto/nestjs-prometheus";
 
 @Module({
   imports: [
+    PrometheusModule.register(),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseEnv, grpcEnv, passportEnv, redisEnv, telegramEnv],
+      load: [databaseEnv, grpcEnv, passportEnv, redisEnv, telegramEnv, metricsEnv],
     }),
     PrismaModule,
     RedisModule,
@@ -30,4 +33,4 @@ import { HealthModule } from "./modules/health/health.module";
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

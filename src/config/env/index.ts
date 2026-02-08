@@ -3,3 +3,4 @@ export * from "./grpc.env";
 export * from "./passport.env";
 export * from "./redis.env";
 export * from "./telegram.env";
+export * from "./metrics.env";

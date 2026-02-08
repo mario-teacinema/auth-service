@@ -4,3 +4,4 @@ export * from "./all-configs";
 export * from "./redis-config";
 export * from "./passport-config";
 export * from "./telegram-config";
+export * from "./metrics-config";
