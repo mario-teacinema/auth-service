@@ -13,8 +13,5 @@ async function bootstrap() {
 
   await app.startAllMicroservices();
   await app.init();
-
-  const metricsPort = config.get("metrics.port", { infer: true })!;
-  await app.listen(metricsPort);
 }
 bootstrap().then().catch(console.error);
