@@ -14,6 +14,7 @@ import {
 import { AccountModule } from "./modules/account/account.module";
 import { TelegramModule } from "./modules/telegram/telegram.module";
 import { HealthModule } from "./modules/health/health.module";
+import { TokensModule } from "./modules/tokens/tokens.module";
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { HealthModule } from "./modules/health/health.module";
     AccountModule,
     TelegramModule,
     HealthModule,
+    TokensModule,
   ],
   controllers: [],
   providers: [],

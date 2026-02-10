@@ -5,6 +5,7 @@ import { TelegramVerifyRequest } from "@mario-teacinema/contracts/gen/auth";
 import { TelegramRepository } from "@/modules/telegram/telegram.repository";
 import { randomBytes } from "node:crypto";
 import { RedisService } from "@/infrastructure";
+import { TokensService } from "@/modules/tokens/tokens.service";
 
 @Injectable()
 export class TelegramService {
@@ -20,6 +21,7 @@ export class TelegramService {
     private readonly redisService: RedisService,
     private readonly configService: ConfigService<AllConfigs>,
     private readonly telegramRepository: TelegramRepository,
+    private readonly tokensService: TokensService,
   ) {
     this.BOT_ID =
       this.configService.get("telegram.botId", { infer: true }) ?? "";
@@ -52,10 +54,7 @@ export class TelegramService {
     const exists = await this.telegramRepository.findByTelegramId(telegramId);
 
     if (exists && exists.phone) {
-      return {
-        accessToken: "1",
-        refreshToken: "1",
-      };
+      return this.tokensService.generate(exists.id);
     }
 
     const sessionId = randomBytes(16).toString("hex");
@@ -70,7 +69,7 @@ export class TelegramService {
     );
 
     return {
-      url: `https://t.me/${this.BOT_USERNAME}`,
+      url: `https://t.me/${this.BOT_USERNAME}?start=${sessionId}`,
     };
   }
 }

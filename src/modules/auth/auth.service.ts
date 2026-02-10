@@ -10,34 +10,20 @@ import { AuthRepository } from "./auth.repository";
 import { Account } from "@prisma/generated/client";
 import { OtpService } from "@/modules/otp/otp.service";
 import { RpcException } from "@nestjs/microservices";
-import { PassportService, TokenPayload } from "@mario-teacinema/passport";
-import { ConfigService } from "@nestjs/config";
-import { AllConfigs } from "@/config";
+import { PassportService } from "@mario-teacinema/passport";
 import { RpcStatus } from "@mario-teacinema/common";
 import { UserRepository } from "@/shared/repositories";
+import { TokensService } from "@/modules/tokens/tokens.service";
 
 @Injectable()
 export class AuthService {
-  private readonly ACCESS_TOKEN_TTL: number = 0;
-
-  private readonly REFRESH_TOKEN_TTL: number = 0;
-
   public constructor(
     private readonly authRepository: AuthRepository,
     private readonly userRepository: UserRepository,
     private readonly otpService: OtpService,
     private readonly passportService: PassportService,
-    private readonly configService: ConfigService<AllConfigs>,
-  ) {
-    this.ACCESS_TOKEN_TTL =
-      this.configService.get("passport.accessTtl", {
-        infer: true,
-      }) ?? 0;
-    this.REFRESH_TOKEN_TTL =
-      this.configService.get("passport.refreshTll", {
-        infer: true,
-      }) ?? 0;
-  }
+    private readonly tokensService: TokensService,
+  ) {}
 
   public async sendOtp(data: SendOtpRequest): Promise<SendOtpResponse> {
     const { identifier, type } = data;
@@ -103,29 +89,7 @@ export class AuthService {
       });
     }
 
-    return this.#generateTokens(id);
-  }
-
-  #generateTokens(userId: string): {
-    readonly accessToken: string;
-    readonly refreshToken: string;
-  } {
-    const payload: TokenPayload = { sub: userId };
-
-    const accessToken = this.passportService.generate(
-      payload,
-      this.ACCESS_TOKEN_TTL,
-    );
-
-    const refreshToken = this.passportService.generate(
-      payload,
-      this.REFRESH_TOKEN_TTL,
-    );
-
-    return {
-      accessToken,
-      refreshToken,
-    };
+    return this.tokensService.generate(id);
   }
 
   public refresh(data: RefreshRequest): {
@@ -143,6 +107,6 @@ export class AuthService {
       });
     }
 
-    return this.#generateTokens(String(userId));
+    return this.tokensService.generate(String(userId));
   }
 }

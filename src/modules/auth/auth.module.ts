@@ -3,22 +3,12 @@ import { AuthService } from "./auth.service";
 import { AuthController } from "./auth.controller";
 import { AuthRepository } from "./auth.repository";
 import { OtpModule } from "@/modules/otp/otp.module";
-import { PassportModule } from "@mario-teacinema/passport";
-import { ConfigService } from "@nestjs/config";
-import { AllConfigs } from "@/config";
-import { passportConfigLoader } from "@/config/loaders";
 import { UserRepository } from "@/shared/repositories";
+import { TokensService } from "@/modules/tokens/tokens.service";
 
 @Module({
-  imports: [
-    OtpModule,
-    PassportModule.registerAsync({
-      useFactory: (configService: ConfigService<AllConfigs>) =>
-        passportConfigLoader(configService),
-      inject: [ConfigService],
-    }),
-  ],
+  imports: [OtpModule],
   controllers: [AuthController],
-  providers: [AuthService, AuthRepository, UserRepository],
+  providers: [TokensService, AuthService, AuthRepository, UserRepository],
 })
 export class AuthModule {}
