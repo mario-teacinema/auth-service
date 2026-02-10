@@ -234,17 +234,17 @@ export type AccountWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   phone?: string
   email?: string
+  telegramId?: string
   AND?: Prisma.AccountWhereInput | Prisma.AccountWhereInput[]
   OR?: Prisma.AccountWhereInput[]
   NOT?: Prisma.AccountWhereInput | Prisma.AccountWhereInput[]
   isPhoneVerified?: Prisma.BoolFilter<"Account"> | boolean
   isEmailVerified?: Prisma.BoolFilter<"Account"> | boolean
   role?: Prisma.EnumRoleFilter<"Account"> | $Enums.Role
-  telegramId?: Prisma.StringNullableFilter<"Account"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   pendingContactChanges?: Prisma.PendingContactChangeListRelationFilter
-}, "id" | "phone" | "email">
+}, "id" | "phone" | "email" | "telegramId">
 
 export type AccountOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

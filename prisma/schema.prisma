@@ -19,7 +19,7 @@ model Account {
 
   role Role @default(USER)
 
-  telegramId String? @map("telegram_id")
+  telegramId String? @unique @map("telegram_id")
 
   pendingContactChanges PendingContactChange[]
 

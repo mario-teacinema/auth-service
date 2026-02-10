@@ -2,6 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AllConfigs } from "@/config";
 import { TelegramVerifyRequest } from "@mario-teacinema/contracts/gen/auth";
+import { TelegramRepository } from "@/modules/telegram/telegram.repository";
+import { randomBytes } from "node:crypto";
+import { RedisService } from "@/infrastructure";
 
 @Injectable()
 export class TelegramService {
@@ -14,7 +17,9 @@ export class TelegramService {
   private readonly REDIRECT_ORIGIN: string;
 
   public constructor(
+    private readonly redisService: RedisService,
     private readonly configService: ConfigService<AllConfigs>,
+    private readonly telegramRepository: TelegramRepository,
   ) {
     this.BOT_ID =
       this.configService.get("telegram.botId", { infer: true }) ?? "";
@@ -43,5 +48,29 @@ export class TelegramService {
 
   public async verify(data: TelegramVerifyRequest) {
     const telegramId = data.query.id;
+
+    const exists = await this.telegramRepository.findByTelegramId(telegramId);
+
+    if (exists && exists.phone) {
+      return {
+        accessToken: "1",
+        refreshToken: "1",
+      };
+    }
+
+    const sessionId = randomBytes(16).toString("hex");
+    await this.redisService.set(
+      `telegram_session:${sessionId}`,
+      JSON.stringify({
+        telegramId,
+        username: data.query.username,
+      }),
+      "EX",
+      300,
+    );
+
+    return {
+      url: `https://t.me/${this.BOT_USERNAME}`,
+    };
   }
 }
