@@ -3,9 +3,11 @@ import { ConfigService } from "@nestjs/config";
 import { AllConfigs } from "@/config";
 import { TelegramVerifyRequest } from "@mario-teacinema/contracts/gen/auth";
 import { TelegramRepository } from "@/modules/telegram/telegram.repository";
-import { randomBytes } from "node:crypto";
+import { createHash, createHmac, randomBytes } from "node:crypto";
 import { RedisService } from "@/infrastructure";
 import { TokensService } from "@/modules/tokens/tokens.service";
+import { RpcException } from "@nestjs/microservices";
+import { RpcStatus } from "@mario-teacinema/common";
 
 @Injectable()
 export class TelegramService {
@@ -49,6 +51,14 @@ export class TelegramService {
   }
 
   public async verify(data: TelegramVerifyRequest) {
+    const isValid = this.#checkTelegramAuth(data.query);
+
+    if (!isValid)
+      throw new RpcException({
+        code: RpcStatus.UNAUTHENTICATED,
+        details: "Invalid Telegram Signatu",
+      });
+
     const telegramId = data.query.id;
 
     const exists = await this.telegramRepository.findByTelegramId(telegramId);
@@ -71,5 +81,28 @@ export class TelegramService {
     return {
       url: `https://t.me/${this.BOT_USERNAME}?start=${sessionId}`,
     };
+  }
+
+  #checkTelegramAuth(query: Record<string, string>): boolean {
+    const hash = query.hash;
+
+    if (!hash) return false;
+
+    const dataCheckArr = Object.keys(query)
+      .filter((k) => k !== "hash")
+      .sort()
+      .map((k) => `${k}=${query[k]}`);
+
+    const dataCheckString = dataCheckArr.join("\n");
+
+    const secretKey = createHash("sha256")
+      .update(`${this.BOT_ID}:${this.BOT_TOKEN}`)
+      .digest("hex");
+
+    const hmac = createHmac("sha256", secretKey)
+      .update(dataCheckString)
+      .digest("hex");
+
+    return hmac === hash;
   }
 }
